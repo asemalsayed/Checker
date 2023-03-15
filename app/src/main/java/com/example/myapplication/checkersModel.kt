@@ -13,10 +13,10 @@ class checkersModel {
         for(i in 0..2){
             for (j in 0..7){
                 if((i+j)%2==0){
-                    piecesBox.add(checkersPiece(j,i,checkersPlayer.WHITE))
+                    piecesBox.add(checkersPiece(j,i,checkersPlayer.WHITE,R.drawable.white_man))
                 }
                 if((i+j)%2==1){
-                    piecesBox.add(checkersPiece(j,7-i,checkersPlayer.BLACK))
+                    piecesBox.add(checkersPiece(j,7-i,checkersPlayer.BLACK,R.drawable.dark_man))
                 }
             }
         }

@@ -16,6 +16,7 @@ class board(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     )
     private final val bitmaps = mutableMapOf<Int, Bitmap>()
 
+    var checkersDelegate: checkersDelegate? = null
     init{
         loadBitmaps()
     }
@@ -26,7 +27,16 @@ class board(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     private  fun drawPieces(canvas: Canvas?){
-        drawPieceAt(canvas,0,0,R.drawable.white_man)
+//        val checkersModel = checkersModel()
+//        checkersModel.reset()
+
+        for(row in 0..7){
+            for (col in 0..7){
+
+                checkersDelegate?.pieceAt(col,row)?.let{drawPieceAt(canvas,col,row,it.resID)}
+            }
+        }
+//        drawPieceAt(canvas,0,0,R.drawable.white_man)
 
     }
 
@@ -43,11 +53,15 @@ class board(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     }
 
     private  fun drawCheckersBoard(canvas: Canvas?){
-        for (i in 0..7){
-            for (j in 0..7) {
-                paint.color =if ((i+j) %2 == 1) Color.BLUE else Color.CYAN
-                canvas?.drawRect(originX +j*sellSide, originY+(i)*sellSide, originX + (1+j)*sellSide, originY +(1+i)* sellSide, paint)
+        for (row in 0..7){
+            for (col in 0..7) {
+                drawSquareAt(canvas,col,row,(row+col) %2 == 1)
             }
         }
+    }
+    private fun drawSquareAt(canvas: Canvas?,col: Int, row:Int,isDark:Boolean){
+        paint.color =if (isDark) Color.DKGRAY else Color.LTGRAY
+        canvas?.drawRect(originX +col*sellSide, originY+(row)*sellSide, originX + (1+col)*sellSide, originY +(1+row)* sellSide, paint)
+
     }
 }
